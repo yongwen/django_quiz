@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load i18n %}
+{% block title %}{% trans "All Quizzes" %}{% endblock %}
+
+{% block content %}
+
+    <p/>
+
+    <p>
+    Welcome <b>{{ user.first_name }} {{ user.last_name }}</b> !
+    <br/><br/>
+    The follow quizzes contains a set of multiple choice or true/false questions.
+    You only have one attempt for each chapter,
+    but you will have unlimitted time for each question,
+    so, choose wisely and take your time.
+    <br/><br/>
+    It is ok to look up the book or internet to find the answer. :)
+    </p>
+
+    <h2>{% trans "List of quizzes" %}</h2>
+
+
+    {% if quiz_list %}
+		<table class="table table-bordered table-striped">
+
+		  <thead>
+			<tr>
+			  <th>{% trans "Title" %}</th>
+			  <th></th>
+			</tr>
+		  </thead>
+
+		  <tbody>
+
+        {% for quiz in quiz_list %}
+
+  			<tr>
+			  <td>{{ quiz.title }}</td>
+			  <td>
+                <a href="{% url 'quiz_question' quiz_name=quiz.url %}">
+                    {% trans "Start quiz" %}
+                </a>
+              </td>
+            </tr>
+
+        {% endfor %}
+		  </tbody>
+
+		</table>
+
+	{% else %}
+        <p>{% trans "There are no available quizzes" %}.</p>
+    {% endif %}
+
+<h5>
+    <a href="{% url 'quiz_progress' %}">
+                   Here are your progress so far
+    </a>
+</h5>
+{% endblock %}
